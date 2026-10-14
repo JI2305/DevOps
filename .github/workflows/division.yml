@@ -1,0 +1,28 @@
+name: Division
+
+on:
+  push:
+    branches: [Dev, Val, Prod]
+
+jobs:
+  diviser:
+    runs-on: ubuntu-latest
+    env:
+      NOMBRE: ${{ vars.NOMBRE }}
+      BRANCHE: ${{ github.ref_name }}
+    steps:
+      - name: Choisir le diviseur
+        run: |
+          case "$BRANCHE" in
+            Dev)  echo "DIVISEUR=2" >> "$GITHUB_ENV" ;;
+            Val)  echo "DIVISEUR=4" >> "$GITHUB_ENV" ;;
+            Prod) echo "DIVISEUR=8" >> "$GITHUB_ENV" ;;
+          esac
+
+      - name: Diviser le nombre
+        run: |
+          if (( NOMBRE % DIVISEUR != 0 )); then
+            echo "$NOMBRE n'est pas divisible par $DIVISEUR : arrêt de la pipeline."
+            exit 1
+          fi
+          echo "Branche $BRANCHE : $NOMBRE / $DIVISEUR = $(( NOMBRE / DIVISEUR ))"
