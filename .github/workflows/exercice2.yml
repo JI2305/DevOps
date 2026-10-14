@@ -1,0 +1,19 @@
+name: Exercice 2
+
+on: [push]
+
+jobs:
+  afficher-nom:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Nom : ${{ vars.NOM }}"
+
+  afficher-prenom:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Prénom : ${{ vars.PRENOM }}"
+
+  afficher-email:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Email : ${{ vars.EMAIL }}"
